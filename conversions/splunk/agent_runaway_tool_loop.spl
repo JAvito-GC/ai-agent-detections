@@ -1,0 +1,1 @@
+event_type="tool_call" tool.call_count_window>=25 | table session_id,agent,tool.name,tool.call_count_window,cost_usd_window

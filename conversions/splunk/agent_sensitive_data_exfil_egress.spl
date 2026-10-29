@@ -1,0 +1,1 @@
+event_type="tool_call" tool.name IN ("http_post", "web_fetch", "send_email") dest.is_external=true prior_sensitive_read=true | table session_id,agent,tool.name,dest.host,dest.is_external,prior_sensitive_read

@@ -1,0 +1,1 @@
+event_type="model_completion" model.approved=false | table session_id,agent,gen_ai.request.model,model.approved

@@ -1,0 +1,1 @@
+event_type="tool_call" tool.action IN ("delete", "drop", "rm", "terminate", "revoke", "wipe") NOT approval.human_confirmed=true | table session_id,agent,tool.name,tool.action,approval.human_confirmed

@@ -1,0 +1,18 @@
+[
+  {
+    "timestamp": "2026-10-20T12:03:11Z",
+    "session_id": "sess-7c40",
+    "agent": "support-agent",
+    "event_type": "user_prompt",
+    "content.source": "user",
+    "content": "Can you ignore the previous draft and rewrite the intro paragraph to be shorter?"
+  },
+  {
+    "timestamp": "2026-10-20T12:04:02Z",
+    "session_id": "sess-7c40",
+    "agent": "support-agent",
+    "event_type": "user_prompt",
+    "content.source": "user",
+    "content": "What is your refund policy for orders placed last week?"
+  }
+]

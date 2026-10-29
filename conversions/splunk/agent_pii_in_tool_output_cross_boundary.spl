@@ -1,0 +1,2 @@
+event_type="tool_result" dest.trust_boundary_crossed=true
+| regex content="([-A-Za-z0-9._%+]+\\@[-A-Za-z0-9.]+\\.[A-Za-z]{2,}|[0-9]{4}[- ]?[0-9]{4}[- ]?[0-9]{4}[- ]?[0-9]{4})" | table session_id,agent,tool.name,dest.trust_boundary_crossed,content

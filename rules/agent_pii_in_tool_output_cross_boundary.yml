@@ -1,0 +1,40 @@
+title: AI Agent PII in Tool Output Crossing a Trust Boundary
+id: 49c2d68f-200f-486b-9ffc-3462dcacf102
+status: experimental
+x_fixtures: pii_cross_boundary
+x_owasp_llm:
+  - LLM02   # Sensitive Information Disclosure
+description: >
+  Detects personally identifiable information (email address, payment card
+  number) inside a tool_result whose destination has crossed a trust boundary —
+  for example a result handed to a lower-trust tool, an external connector, or a
+  user-visible channel. PII leaving the boundary it was collected within is a
+  sensitive-information-disclosure event regardless of intent: the agent is
+  moving regulated data somewhere it should not go. The trust-boundary flag is
+  precomputed at ingestion so the rule needs no correlation.
+references:
+  - https://genai.owasp.org/llmrisk/llm022025-sensitive-information-disclosure/
+  - https://atlas.mitre.org/techniques/AML.T0057/   # LLM Data Leakage
+author: Javier Morales
+date: 2026/10/20
+tags:
+  - attack.exfiltration
+logsource:
+  product: ai_agent
+  category: agent_runtime
+detection:
+  selection:
+    event_type: tool_result
+    dest.trust_boundary_crossed: true
+    content|re: '([-A-Za-z0-9._%+]+\@[-A-Za-z0-9.]+\.[A-Za-z]{2,}|[0-9]{4}[- ]?[0-9]{4}[- ]?[0-9]{4}[- ]?[0-9]{4})'
+  condition: selection
+fields:
+  - session_id
+  - agent
+  - tool.name
+  - dest.trust_boundary_crossed
+  - content
+falsepositives:
+  - Support flows that legitimately echo a customer's own email back to that same customer (boundary flag mis-set) — tune the boundary classifier.
+  - Order IDs or phone numbers in a 13-16 digit run that resemble a card; add a Luhn check upstream to reduce card false positives.
+level: high

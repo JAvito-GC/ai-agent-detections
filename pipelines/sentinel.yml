@@ -1,0 +1,37 @@
+# Microsoft Sentinel / Log Analytics: custom-table columns cannot contain dots,
+# so dotted telemetry fields are mapped to underscores, and every query is scoped
+# to the custom table. Rename AIAgentRuntime_CL to your table.
+name: AI agent runtime -> Microsoft Sentinel custom table
+priority: 100
+transformations:
+  - id: ai_agent_sentinel_columns
+    type: field_name_mapping
+    mapping:
+      agent.spawn_depth: agent_spawn_depth
+      approval.human_confirmed: approval_human_confirmed
+      content.scanner_verdict: content_scanner_verdict
+      content.source: content_source
+      dest.host: dest_host
+      dest.is_external: dest_is_external
+      dest.trust_boundary_crossed: dest_trust_boundary_crossed
+      gen_ai.request.model: gen_ai_request_model
+      gen_ai.usage.output_tokens: gen_ai_usage_output_tokens
+      mcp.server: mcp_server
+      mcp.tool_schema_changed: mcp_tool_schema_changed
+      memory.key: memory_key
+      model.approved: model_approved
+      output.rendered_as: output_rendered_as
+      tool.action: tool_action
+      tool.allowed: tool_allowed
+      tool.args: tool_args
+      tool.call_count_window: tool_call_count_window
+      tool.name: tool_name
+postprocessing:
+  # KQL `=~` is string-only; boolean columns need `==`
+  - type: replace
+    pattern: '=~ (true|false)\b'
+    replacement: '== \1'
+  - type: template
+    template: |-
+      AIAgentRuntime_CL
+      | where {{ query }}

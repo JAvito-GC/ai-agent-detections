@@ -1,0 +1,2 @@
+AIAgentRuntime_CL
+| where (event_type =~ "model_completion" and (output_rendered_as in~ ("html", "markdown", "shell"))) and (content contains "<script" or content contains "javascript:" or content contains "os.system" or content contains "rm -rf")

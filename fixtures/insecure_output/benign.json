@@ -1,0 +1,18 @@
+[
+  {
+    "timestamp": "2026-10-20T12:12:05Z",
+    "session_id": "sess-5a19",
+    "agent": "report-agent",
+    "event_type": "model_completion",
+    "output.rendered_as": "html",
+    "content": "<p>Your order ships tomorrow and arrives within 3 business days.</p>"
+  },
+  {
+    "timestamp": "2026-10-20T12:12:48Z",
+    "session_id": "sess-5a19",
+    "agent": "report-agent",
+    "event_type": "model_completion",
+    "output.rendered_as": "plain_text",
+    "content": "To add JavaScript to a page you write a <script> tag. This is shown here as inert text, not rendered or executed."
+  }
+]

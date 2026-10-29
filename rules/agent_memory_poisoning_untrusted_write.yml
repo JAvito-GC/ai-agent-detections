@@ -1,0 +1,41 @@
+title: Agent Memory Written From an Untrusted Source
+id: c1e7a2b9-4d60-4a85-9f32-8b5c3e1d7a04
+status: experimental
+x_fixtures: memory_poisoning
+x_owasp_llm:
+  - LLM04   # Data and Model Poisoning
+description: >
+  Detects a write into the agent's persistent memory whose content originated from
+  an UNTRUSTED source — a tool result, a retrieved document, or a web fetch — rather
+  than the operator. This is memory poisoning: an attacker plants content in a data
+  source the agent later reads, the agent commits it to long-term memory, and the
+  poisoned fact steers future sessions (data/model poisoning at the agent layer).
+  Writes sourced from the user or the model's own reasoning are not matched.
+references:
+  - https://genai.owasp.org/llmrisk/llm04-data-and-model-poisoning/
+  - https://atlas.mitre.org/techniques/AML.T0070/   # RAG Poisoning
+author: Javier Morales
+date: 2026/10/20
+tags:
+  - attack.persistence
+logsource:
+  product: ai_agent
+  category: agent_runtime
+detection:
+  selection:
+    event_type: memory_write
+    content.source:
+      - tool_output
+      - retrieval
+      - web_fetch
+  condition: selection
+fields:
+  - session_id
+  - agent
+  - content.source
+  - memory.key
+  - content
+falsepositives:
+  - A design that deliberately caches tool/retrieval results into memory as a feature — allowlist the specific memory keys or require a provenance/trust flag before writing.
+  - Summaries the model writes about tool output but tagged source=model rather than the raw untrusted source.
+level: high

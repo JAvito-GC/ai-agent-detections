@@ -1,0 +1,13 @@
+[
+  {
+    "timestamp": "2026-10-20T09:14:02Z",
+    "session_id": "sess-ff21",
+    "agent": "ops-assistant",
+    "event_type": "tool_call",
+    "tool.name": "shell_exec",
+    "tool.allowed": false,
+    "tool.args": "curl -s http://169.254.169.254/latest/meta-data/iam/security-credentials/",
+    "gen_ai.request.model": "claude-opus-4-8",
+    "content.source": "model"
+  }
+]

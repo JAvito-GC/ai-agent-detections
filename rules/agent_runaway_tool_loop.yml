@@ -1,0 +1,40 @@
+title: AI Agent Runaway Tool-Call Loop
+id: 2f9d6b11-7c4e-4e8a-b0a2-5d3c7e1a9b02
+status: experimental
+x_fixtures: runaway_loop
+x_owasp_llm:
+  - LLM10   # Unbounded Consumption
+description: >
+  Detects an autonomous agent stuck in a runaway loop — the same session issuing
+  an abnormally high number of tool calls within a short window. Agentic loops
+  that never terminate drive unbounded consumption (token/API cost, rate-limit
+  exhaustion, downstream load) and are a common failure mode of self-reflecting
+  or multi-agent systems, as well as a denial-of-wallet attack vector. The field
+  tool.call_count_window is the number of tool calls by this session in the
+  trailing window, computed at ingestion.
+references:
+  - https://genai.owasp.org/llmrisk/llm102025-unbounded-consumption/
+  - https://atlas.mitre.org/techniques/AML.T0034/   # Cost Harvesting
+  - https://atlas.mitre.org/techniques/AML.T0029/   # Denial of AI Service
+author: Javier Morales
+date: 2026/10/20
+tags:
+  - attack.impact
+logsource:
+  product: ai_agent
+  category: agent_runtime
+detection:
+  selection:
+    event_type: tool_call
+    tool.call_count_window|gte: 25
+  condition: selection
+fields:
+  - session_id
+  - agent
+  - tool.name
+  - tool.call_count_window
+  - cost_usd_window
+falsepositives:
+  - Legitimate bulk/batch jobs (large backfills) that fan out many tool calls by design — scope those sessions out.
+  - Threshold (25) needs tuning per agent; raise it for high-throughput data agents.
+level: medium

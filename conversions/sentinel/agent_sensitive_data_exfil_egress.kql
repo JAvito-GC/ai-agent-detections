@@ -1,0 +1,2 @@
+AIAgentRuntime_CL
+| where event_type =~ "tool_call" and (tool_name in~ ("http_post", "web_fetch", "send_email")) and dest_is_external == true and prior_sensitive_read == true

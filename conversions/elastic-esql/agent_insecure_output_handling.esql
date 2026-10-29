@@ -1,0 +1,1 @@
+from * metadata _id, _index, _version | where event_type=="model_completion" and (output.rendered_as in ("html", "markdown", "shell")) and (TO_LOWER(content) like "*<script*" or TO_LOWER(content) like "*javascript:*" or TO_LOWER(content) like "*os.system*" or TO_LOWER(content) like "*rm -rf*")

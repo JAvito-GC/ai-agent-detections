@@ -1,0 +1,12 @@
+[
+  {
+    "timestamp": "2026-10-20T13:05:44Z",
+    "session_id": "sess-6a2d",
+    "agent": "support-bot",
+    "event_type": "model_completion",
+    "gen_ai.request.model": "shadow-proxy/gpt-oss-20b",
+    "model.approved": false,
+    "gen_ai.usage.output_tokens": 320,
+    "content.source": "model"
+  }
+]

@@ -1,0 +1,1 @@
+from * metadata _id, _index, _version | where event_type=="tool_call" and (tool.name in ("web_fetch", "http_request")) and (TO_LOWER(tool.args) like "*169.254.169.254*" or TO_LOWER(tool.args) like "*localhost*" or TO_LOWER(tool.args) like "*127.0.0.1*" or TO_LOWER(tool.args) like "*metadata*" or TO_LOWER(tool.args) like "*::1*")

@@ -1,0 +1,2 @@
+AIAgentRuntime_CL
+| where (event_type =~ "user_prompt" and content_source =~ "user" and (content contains "ignore previous instructions" or content contains "developer mode" or content contains "pretend you have no restrictions" or content contains "bypass your guidelines")) or (event_type =~ "user_prompt" and content_source =~ "user" and content matches regex "\\bDAN\\b")

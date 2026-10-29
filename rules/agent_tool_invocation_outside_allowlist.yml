@@ -1,0 +1,37 @@
+title: AI Agent Invoked a Tool Outside Its Allowlist
+id: 7b1c9a40-0e2f-4a1b-9c3d-1f6b2a5e8c01
+status: experimental
+x_fixtures: tool_allowlist
+x_owasp_llm:
+  - LLM06   # Excessive Agency
+  - LLM01   # Prompt Injection (common root cause)
+description: >
+  Detects an autonomous agent (LLM + tools) invoking a tool that is NOT in its
+  approved allowlist. Unapproved tool use is the clearest runtime signal of
+  excessive agency: the agent is acting beyond the capabilities its operator
+  granted it — whether due to prompt injection, a planning error, or an attacker
+  steering the agent toward a dangerous capability (shell, cloud API, mailer).
+references:
+  - https://genai.owasp.org/llmrisk/llm062025-excessive-agency/
+  - https://atlas.mitre.org/techniques/AML.T0053/   # AI Agent Tool Invocation
+author: Javier Morales
+date: 2026/10/20
+tags:
+  - attack.execution
+logsource:
+  product: ai_agent
+  category: agent_runtime
+detection:
+  selection:
+    event_type: tool_call
+    tool.allowed: false
+  condition: selection
+fields:
+  - session_id
+  - agent
+  - tool.name
+  - tool.args
+falsepositives:
+  - A newly added tool not yet reflected in the agent's allowlist configuration.
+  - Allowlist evaluated downstream (field populated by the gateway) lagging a deploy.
+level: high

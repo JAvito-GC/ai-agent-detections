@@ -1,0 +1,25 @@
+[
+  {
+    "timestamp": "2026-10-20T10:02:33Z",
+    "session_id": "sess-7c3e",
+    "agent": "infra-assistant",
+    "event_type": "tool_call",
+    "tool.name": "cloud_api",
+    "tool.action": "terminate",
+    "tool.args": "{\"resource\": \"db-prod-01\"}",
+    "approval.human_confirmed": false,
+    "gen_ai.request.model": "claude-opus-4-8",
+    "content.source": "model"
+  },
+  {
+    "timestamp": "2026-10-20T10:04:10Z",
+    "session_id": "sess-7c3e",
+    "agent": "infra-assistant",
+    "event_type": "tool_call",
+    "tool.name": "db_admin",
+    "tool.action": "drop",
+    "tool.args": "{\"table\": \"customers\"}",
+    "gen_ai.request.model": "claude-opus-4-8",
+    "content.source": "model"
+  }
+]

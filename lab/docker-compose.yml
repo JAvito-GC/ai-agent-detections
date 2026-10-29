@@ -1,0 +1,29 @@
+# End-to-end lab: the converted queries in conversions/ run against real engines.
+# All ports bind to 127.0.0.1 only. Start it with lab/run.sh (it generates the
+# Splunk password and HEC token at runtime; nothing secret lives in the repo).
+name: detections-lab
+
+services:
+  elastic:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.5
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+    ports: ["127.0.0.1:9200:9200"]
+
+  kusto:
+    # Azure Data Explorer emulator: same KQL engine as Microsoft Sentinel / Log Analytics
+    image: mcr.microsoft.com/azuredataexplorer/kustainer-linux:latest
+    environment:
+      - ACCEPT_EULA=Y
+    ports: ["127.0.0.1:8080:8080"]
+
+  splunk:
+    image: splunk/splunk:9.3.2
+    environment:
+      - SPLUNK_START_ARGS=--accept-license
+      - SPLUNK_GENERAL_TERMS=--accept-sgt-current-at-splunk-com
+      - SPLUNK_PASSWORD=${SPLUNK_PASSWORD:?run lab/run.sh}
+      - SPLUNK_HEC_TOKEN=${SPLUNK_HEC_TOKEN:?run lab/run.sh}
+    ports: ["127.0.0.1:8089:8089", "127.0.0.1:8088:8088"]

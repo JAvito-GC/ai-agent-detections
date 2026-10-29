@@ -1,0 +1,11 @@
+[
+  {
+    "timestamp": "2026-10-20T12:40:51Z",
+    "session_id": "sess-8e1c",
+    "agent": "report-writer",
+    "event_type": "model_completion",
+    "gen_ai.request.model": "claude-opus-4-8",
+    "gen_ai.usage.output_tokens": 14230,
+    "content.source": "model"
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "timestamp": "2026-10-20T12:21:30Z",
+    "session_id": "sess-11b2",
+    "agent": "ops-agent",
+    "event_type": "memory_write",
+    "content.source": "user",
+    "memory.key": "user_preferences",
+    "content": "User prefers all responses in Spanish and concise."
+  },
+  {
+    "timestamp": "2026-10-20T12:22:14Z",
+    "session_id": "sess-11b2",
+    "agent": "ops-agent",
+    "event_type": "tool_result",
+    "content.source": "web_fetch",
+    "content": "Fetched article body describing standard refund policies for e-commerce stores."
+  }
+]

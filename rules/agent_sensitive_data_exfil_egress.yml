@@ -1,0 +1,47 @@
+title: AI Agent Sensitive Data Exfiltration via Network Egress Tool
+id: d3b3689d-bb42-41a6-ac34-39588bf9fd89
+status: experimental
+x_fixtures: data_exfil_egress
+x_owasp_llm:
+  - LLM02   # Sensitive Information Disclosure
+description: >
+  Detects an autonomous agent invoking a network-egress tool (http_post,
+  web_fetch, send_email) toward an EXTERNAL destination immediately after it has
+  read sensitive data in the same session. This is the classic agentic
+  data-leak chain: the model reads secrets/PII/internal records with one tool,
+  then ships them out of the trust boundary with another — whether driven by
+  prompt injection, a poisoned instruction, or a planning error. Both signals
+  (external destination, a prior sensitive read in-session) are precomputed at
+  ingestion so the rule stays correlation-free.
+references:
+  - https://genai.owasp.org/llmrisk/llm022025-sensitive-information-disclosure/
+  - https://atlas.mitre.org/techniques/AML.T0025/   # Exfiltration via Cyber Means
+  - https://atlas.mitre.org/techniques/AML.T0024/   # Exfiltration via AI Inference API
+author: Javier Morales
+date: 2026/10/20
+tags:
+  - attack.exfiltration
+logsource:
+  product: ai_agent
+  category: agent_runtime
+detection:
+  selection:
+    event_type: tool_call
+    tool.name:
+      - http_post
+      - web_fetch
+      - send_email
+    dest.is_external: true
+    prior_sensitive_read: true
+  condition: selection
+fields:
+  - session_id
+  - agent
+  - tool.name
+  - dest.host
+  - dest.is_external
+  - prior_sensitive_read
+falsepositives:
+  - Approved integrations that legitimately send session data to an external SaaS (CRM sync, ticketing webhook) — allowlist those dest.host values.
+  - prior_sensitive_read mis-tagged by an over-broad sensitivity classifier upstream; tune the classifier, not the rule.
+level: high

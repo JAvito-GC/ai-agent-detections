@@ -1,0 +1,51 @@
+title: AI Agent Destructive Action Without Human Approval
+id: 523bfcf1-b551-4a24-91fd-306724bf2407
+status: experimental
+x_fixtures: destructive_no_approval
+x_owasp_llm:
+  - LLM06   # Excessive Agency
+description: >
+  Detects an autonomous agent invoking a destructive tool action
+  (delete, drop, rm, terminate, revoke, wipe) WITHOUT a recorded human
+  confirmation. Irreversible actions are the sharpest edge of excessive
+  agency: an agent that can delete data, tear down infrastructure, or
+  revoke credentials on its own — whether steered by prompt injection, a
+  planning error, or over-broad autonomy — can cause real damage before a
+  human notices. Requiring approval.human_confirmed on destructive actions
+  is a human-in-the-loop control; this rule fires when that control is
+  missing or false. The absence of the approval field is treated as
+  unapproved (fail closed).
+references:
+  - https://genai.owasp.org/llmrisk/llm062025-excessive-agency/
+  - https://atlas.mitre.org/techniques/AML.T0053/   # AI Agent Tool Invocation
+  - https://atlas.mitre.org/techniques/AML.T0048/   # External Harms
+author: Javier Morales
+date: 2026/10/20
+tags:
+  - attack.impact
+logsource:
+  product: ai_agent
+  category: agent_runtime
+detection:
+  selection:
+    event_type: tool_call
+    tool.action:
+      - delete
+      - drop
+      - rm
+      - terminate
+      - revoke
+      - wipe
+  approval:
+    approval.human_confirmed: true
+  condition: selection and not approval
+fields:
+  - session_id
+  - agent
+  - tool.name
+  - tool.action
+  - approval.human_confirmed
+falsepositives:
+  - Approvals granted out-of-band (e.g. a prior CLI ok) where approval.human_confirmed was never written back onto the event — fix the pipeline to stamp the field.
+  - Agents operating in a sandbox/ephemeral environment where destructive actions are safe by design — scope those sessions out.
+level: high

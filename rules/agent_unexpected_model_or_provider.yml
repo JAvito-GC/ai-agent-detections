@@ -1,0 +1,38 @@
+title: AI Agent Completion From an Unexpected Model or Provider
+id: 2a1a54df-54ab-4d5e-8911-9cf7f2081da2
+status: experimental
+x_fixtures: unexpected_model
+x_owasp_llm:
+  - LLM03   # Supply Chain
+description: >
+  Detects a model completion served by a model or provider that is NOT on the
+  approved list. A completion from an unexpected model/provider is a
+  supply-chain and config-drift signal: an agent may have been silently
+  repointed to an unvetted endpoint (a rogue proxy, a cheaper/compromised
+  provider, a shadow deployment) — exposing prompts and data to an untrusted
+  party and bypassing the safety, cost, and governance assumptions made for
+  the sanctioned model. The field model.approved is a boolean stamped at
+  ingestion by resolving gen_ai.request.model against the approved registry.
+  This rule fires when model.approved is false.
+references:
+  - https://genai.owasp.org/llmrisk/llm032025-supply-chain/
+  - https://atlas.mitre.org/techniques/AML.T0010.003/   # AI Supply Chain Compromise: Model
+author: Javier Morales
+date: 2026/10/20
+logsource:
+  product: ai_agent
+  category: agent_runtime
+detection:
+  selection:
+    event_type: model_completion
+    model.approved: false
+  condition: selection
+fields:
+  - session_id
+  - agent
+  - gen_ai.request.model
+  - model.approved
+falsepositives:
+  - A newly onboarded model/provider not yet added to the approved registry — update the registry.
+  - Approval registry lagging a deploy (field resolved downstream by the gateway).
+level: high

@@ -1,0 +1,1 @@
+event_type="model_completion" output.rendered_as IN ("html", "markdown", "shell") content IN ("*<script*", "*javascript:*", "*os.system*", "*rm -rf*") | table session_id,agent,output.rendered_as,content

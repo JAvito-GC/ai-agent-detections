@@ -1,0 +1,22 @@
+[
+  {
+    "timestamp": "2026-10-20T12:31:40Z",
+    "session_id": "sess-8a05",
+    "agent": "research-agent",
+    "event_type": "tool_call",
+    "tool.name": "weather_lookup",
+    "mcp.server": "community-weather-mcp",
+    "mcp.tool_schema_changed": false,
+    "tool.args": "{\"city\": \"Madrid\"}"
+  },
+  {
+    "timestamp": "2026-10-20T12:32:18Z",
+    "session_id": "sess-8a05",
+    "agent": "research-agent",
+    "event_type": "tool_call",
+    "tool.name": "db_query",
+    "mcp.server": "internal-db-mcp",
+    "mcp.tool_schema_changed": false,
+    "tool.args": "{\"q\": \"SELECT 1\"}"
+  }
+]

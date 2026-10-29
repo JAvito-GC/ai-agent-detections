@@ -1,0 +1,40 @@
+title: AI Agent Unbounded Single Model Completion
+id: dbaf67e6-e063-423b-ab54-d9e8c7064e17
+status: experimental
+x_fixtures: unbounded_completion
+x_owasp_llm:
+  - LLM10   # Unbounded Consumption
+description: >
+  Detects a single model completion that emits an abnormally large number of
+  output tokens. A single runaway generation drives unbounded consumption
+  (token spend, latency, downstream payload size) and often signals a
+  degenerate loop, a prompt that failed to bound the response, or an attacker
+  coercing the model into dumping large volumes of text (data exfil padding,
+  denial-of-wallet). The field gen_ai.usage.output_tokens is the completion's
+  output token count (OpenTelemetry GenAI). This rule fires at >= 8000 output
+  tokens in one completion; tune per model's context and expected task size.
+references:
+  - https://genai.owasp.org/llmrisk/llm102025-unbounded-consumption/
+  - https://atlas.mitre.org/techniques/AML.T0034/   # Cost Harvesting
+  - https://atlas.mitre.org/techniques/AML.T0029/   # Denial of AI Service
+author: Javier Morales
+date: 2026/10/20
+tags:
+  - attack.impact
+logsource:
+  product: ai_agent
+  category: agent_runtime
+detection:
+  selection:
+    event_type: model_completion
+    gen_ai.usage.output_tokens|gte: 8000
+  condition: selection
+fields:
+  - session_id
+  - agent
+  - gen_ai.request.model
+  - gen_ai.usage.output_tokens
+falsepositives:
+  - Legitimate long-form generation tasks (full reports, large code files, bulk translation) that genuinely need big outputs — raise the threshold for those agents.
+  - Models with very large max_output configured where 8000 tokens is routine.
+level: medium

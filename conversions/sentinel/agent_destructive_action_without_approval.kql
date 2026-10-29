@@ -1,0 +1,2 @@
+AIAgentRuntime_CL
+| where (event_type =~ "tool_call" and (tool_action in~ ("delete", "drop", "rm", "terminate", "revoke", "wipe"))) and (not(approval_human_confirmed == true))

@@ -1,0 +1,13 @@
+[
+  {
+    "timestamp": "2026-10-20T11:20:14Z",
+    "session_id": "sess-4f9d",
+    "agent": "orchestrator",
+    "event_type": "tool_call",
+    "tool.name": "spawn_agent",
+    "agent.spawn_depth": 4,
+    "tool.args": "{\"role\": \"sub-researcher\"}",
+    "gen_ai.request.model": "openrouter/qwen/qwen3.7-plus",
+    "content.source": "model"
+  }
+]

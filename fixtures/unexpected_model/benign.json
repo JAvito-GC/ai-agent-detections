@@ -1,0 +1,22 @@
+[
+  {
+    "timestamp": "2026-10-20T13:03:10Z",
+    "session_id": "sess-9b4e",
+    "agent": "support-bot",
+    "event_type": "model_completion",
+    "gen_ai.request.model": "claude-opus-4-8",
+    "model.approved": true,
+    "gen_ai.usage.output_tokens": 280,
+    "content.source": "model"
+  },
+  {
+    "timestamp": "2026-10-20T13:04:22Z",
+    "session_id": "sess-9b4e",
+    "agent": "support-bot",
+    "event_type": "tool_call",
+    "tool.name": "kb_search",
+    "model.approved": false,
+    "gen_ai.request.model": "claude-opus-4-8",
+    "content.source": "model"
+  }
+]

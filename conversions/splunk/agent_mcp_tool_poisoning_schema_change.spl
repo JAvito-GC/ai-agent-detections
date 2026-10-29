@@ -1,0 +1,1 @@
+event_type="tool_call" mcp.tool_schema_changed=true | table session_id,agent,tool.name,mcp.server

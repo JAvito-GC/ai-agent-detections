@@ -1,0 +1,2 @@
+AIAgentRuntime_CL
+| where event_type =~ "tool_result" and dest_trust_boundary_crossed == true and content matches regex "([-A-Za-z0-9._%+]+\\@[-A-Za-z0-9.]+\\.[A-Za-z]{2,}|[0-9]{4}[- ]?[0-9]{4}[- ]?[0-9]{4}[- ]?[0-9]{4})"

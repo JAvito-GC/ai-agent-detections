@@ -1,0 +1,47 @@
+title: Insecure Handling of Model Output (Executable Payload in Rendered Sink)
+id: b8d4c016-2e5a-4f73-8c91-6a2b7d4e9f05
+status: experimental
+x_fixtures: insecure_output
+x_owasp_llm:
+  - LLM05   # Improper Output Handling
+description: >
+  Detects model output that is passed, unsanitised, into a sink that executes or
+  renders it — HTML, Markdown, or a shell — while carrying an executable payload
+  (<script, javascript:, os.system, rm -rf). Improper output handling turns the
+  model into a confused deputy: an attacker who can steer the model (directly or
+  via injection) then reaches XSS, SSRF, or command execution in the downstream
+  component. The two blocks require BOTH an executable rendering context AND a
+  payload, so plain-text output that merely mentions a payload stays quiet.
+references:
+  - https://genai.owasp.org/llmrisk/llm052025-improper-output-handling/
+  - https://atlas.mitre.org/techniques/AML.T0053/   # AI Agent Tool Invocation (closest fit: ATLAS has no exact technique; this is pure OWASP LLM05)
+author: Javier Morales
+date: 2026/10/20
+tags:
+  - attack.execution
+logsource:
+  product: ai_agent
+  category: agent_runtime
+detection:
+  selection:
+    event_type: model_completion
+    output.rendered_as:
+      - html
+      - markdown
+      - shell
+  payload:
+    content|contains:
+      - "<script"
+      - "javascript:"
+      - os.system
+      - rm -rf
+  condition: selection and payload
+fields:
+  - session_id
+  - agent
+  - output.rendered_as
+  - content
+falsepositives:
+  - A code-assistant whose job is to emit code (os.system, shell snippets) into a rendered context — scope this rule to agents that should never produce executable output, or gate by tool/sink.
+  - Documentation output that quotes a payload inside an escaped/inert code block; confirm the sink actually executes vs. displays.
+level: high

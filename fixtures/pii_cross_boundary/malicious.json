@@ -1,0 +1,24 @@
+[
+  {
+    "timestamp": "2026-10-20T14:22:03Z",
+    "session_id": "sess-be44",
+    "agent": "billing-agent",
+    "event_type": "tool_result",
+    "content.source": "tool_output",
+    "tool.name": "export_to_webhook",
+    "dest.trust_boundary_crossed": true,
+    "content": "Customer record: name=John Doe, email=john.doe@example.com, card=4111 1111 1111 1111, status=active",
+    "gen_ai.request.model": "claude-opus-4-8"
+  },
+  {
+    "timestamp": "2026-10-20T12:06:00Z",
+    "session_id": "sess-p2b7",
+    "agent": "billing-agent",
+    "event_type": "tool_result",
+    "content.source": "tool_output",
+    "tool.name": "export_to_webhook",
+    "dest.trust_boundary_crossed": true,
+    "content": "Customer record: name Jane Roe, email Jane.Roe@Example-Corp.COM, tier gold.",
+    "gen_ai.request.model": "claude-opus-4-8"
+  }
+]

@@ -1,0 +1,47 @@
+title: AI Agent SSRF via Fetch Tool to Internal / Metadata Endpoint
+id: 5a08954c-9edd-4204-b654-8ace3abb4cb9
+status: experimental
+x_fixtures: ssrf_internal
+x_owasp_llm:
+  - LLM06   # Excessive Agency
+description: >
+  Detects an agent using a fetch/HTTP tool to reach an internal-only or
+  cloud-metadata endpoint — the server-side request forgery (SSRF) pattern that
+  turns an agent's web_fetch into a pivot into the host's private network. The
+  cloud metadata IP (169.254.169.254), loopback (127.0.0.1 / ::1 / localhost),
+  and "metadata" hostnames are the high-signal targets attackers steer an agent
+  toward (often via indirect prompt injection) to steal instance credentials.
+  This is an excessive-agency failure: the fetch tool is being used to reach a
+  destination it was never meant to touch.
+references:
+  - https://genai.owasp.org/llmrisk/llm062025-excessive-agency/
+  - https://atlas.mitre.org/techniques/AML.T0053/   # AI Agent Tool Invocation (closest fit: ATLAS does not cover SSRF / pivot to the internal network)
+author: Javier Morales
+date: 2026/10/20
+tags:
+  - attack.discovery
+logsource:
+  product: ai_agent
+  category: agent_runtime
+detection:
+  selection:
+    event_type: tool_call
+    tool.name:
+      - web_fetch
+      - http_request
+    tool.args|contains:
+      - 169.254.169.254
+      - localhost
+      - 127.0.0.1
+      - metadata
+      - "::1"
+  condition: selection
+fields:
+  - session_id
+  - agent
+  - tool.name
+  - tool.args
+falsepositives:
+  - A legitimate health-check or dev workflow that fetches localhost / 127.0.0.1 — scope those agents or environments out.
+  - A public URL that happens to contain the literal "metadata" in its path; narrow the term or add a destination allowlist.
+level: high

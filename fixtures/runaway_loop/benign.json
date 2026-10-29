@@ -1,0 +1,14 @@
+[
+  {
+    "timestamp": "2026-10-20T03:01:11Z",
+    "session_id": "sess-1a2b",
+    "agent": "research-crew",
+    "event_type": "tool_call",
+    "tool.name": "web_fetch",
+    "tool.allowed": true,
+    "tool.call_count_window": 3,
+    "cost_usd_window": 0.04,
+    "gen_ai.request.model": "openrouter/qwen/qwen3.7-plus",
+    "content.source": "model"
+  }
+]

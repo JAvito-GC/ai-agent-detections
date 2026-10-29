@@ -1,0 +1,38 @@
+title: MCP Tool Schema Changed Since Registration (Rug Pull)
+id: d6b3f8a1-5c27-4e90-8a46-9d1e2b7c5f08
+status: experimental
+x_fixtures: mcp_tool_poisoning
+x_owasp_llm:
+  - LLM03   # Supply Chain
+description: >
+  Detects a tool call where the MCP tool's schema or description has changed versus
+  the version the operator registered and approved. A "rug pull" tool poisoning
+  attack ships a benign tool, waits for it to be trusted, then silently mutates the
+  tool description or schema to carry hidden instructions or widen its arguments —
+  compromising the agent through the supply chain. Any drift from the registered
+  baseline on an in-use tool is suspicious and should be re-reviewed before trust.
+references:
+  - https://genai.owasp.org/llmrisk/llm032025-supply-chain/
+  - https://atlas.mitre.org/techniques/AML.T0010.001/   # AI Supply Chain Compromise: AI Software
+author: Javier Morales
+date: 2026/10/20
+tags:
+  - attack.initial-access
+  - attack.t1195.002
+logsource:
+  product: ai_agent
+  category: agent_runtime
+detection:
+  selection:
+    event_type: tool_call
+    mcp.tool_schema_changed: true
+  condition: selection
+fields:
+  - session_id
+  - agent
+  - tool.name
+  - mcp.server
+falsepositives:
+  - A legitimate, operator-approved update to an MCP server/tool that has not yet been re-pinned in the registered baseline — re-pin on review to clear.
+  - Baseline computed per-session on first use lagging a just-deployed server upgrade.
+level: high

@@ -1,0 +1,28 @@
+[
+  {
+    "timestamp": "2026-10-20T12:01:40Z",
+    "session_id": "sess-ab77",
+    "agent": "research-agent",
+    "event_type": "tool_call",
+    "tool.name": "http_post",
+    "tool.args": "{\"url\": \"https://internal.svc.local/metrics\", \"body\": \"<customer records>\"}",
+    "dest.host": "internal.svc.local",
+    "dest.is_external": false,
+    "prior_sensitive_read": true,
+    "gen_ai.request.model": "claude-opus-4-8",
+    "content.source": "model"
+  },
+  {
+    "timestamp": "2026-10-20T12:02:05Z",
+    "session_id": "sess-ab77",
+    "agent": "research-agent",
+    "event_type": "tool_call",
+    "tool.name": "web_fetch",
+    "tool.args": "{\"url\": \"https://docs.example.com/pricing\"}",
+    "dest.host": "docs.example.com",
+    "dest.is_external": true,
+    "prior_sensitive_read": false,
+    "gen_ai.request.model": "claude-opus-4-8",
+    "content.source": "model"
+  }
+]

@@ -1,0 +1,24 @@
+[
+  {
+    "timestamp": "2026-10-20T11:38:02Z",
+    "session_id": "sess-77aa",
+    "agent": "support-agent",
+    "event_type": "tool_result",
+    "content.source": "retrieval",
+    "tool.name": "kb_search",
+    "content.scanner_verdict": "unscanned",
+    "content": "Refund policy: customers may request a refund within 30 days of purchase.",
+    "gen_ai.request.model": "claude-opus-4-8"
+  },
+  {
+    "timestamp": "2026-10-20T11:38:40Z",
+    "session_id": "sess-77aa",
+    "agent": "support-agent",
+    "event_type": "tool_result",
+    "content.source": "retrieval",
+    "tool.name": "kb_search",
+    "content.scanner_verdict": "benign_confirmed",
+    "content": "Security training doc: attackers often write 'ignore previous instructions' to hijack an agent. This paragraph is a known-benign example reviewed by the output scanner.",
+    "gen_ai.request.model": "claude-opus-4-8"
+  }
+]

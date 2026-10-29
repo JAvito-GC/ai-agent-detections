@@ -1,0 +1,2 @@
+AIAgentRuntime_CL
+| where event_type =~ "tool_call" and mcp_tool_schema_changed == true

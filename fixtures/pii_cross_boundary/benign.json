@@ -1,0 +1,24 @@
+[
+  {
+    "timestamp": "2026-10-20T14:20:10Z",
+    "session_id": "sess-cd91",
+    "agent": "billing-agent",
+    "event_type": "tool_result",
+    "content.source": "tool_output",
+    "tool.name": "lookup_customer",
+    "dest.trust_boundary_crossed": false,
+    "content": "Customer record: name=John Doe, email=john.doe@example.com, status=active",
+    "gen_ai.request.model": "claude-opus-4-8"
+  },
+  {
+    "timestamp": "2026-10-20T14:21:05Z",
+    "session_id": "sess-cd91",
+    "agent": "billing-agent",
+    "event_type": "tool_result",
+    "content.source": "tool_output",
+    "tool.name": "export_to_webhook",
+    "dest.trust_boundary_crossed": true,
+    "content": "Order #10294 shipped on 2026-10-19 via carrier SEUR, tracking ES77301.",
+    "gen_ai.request.model": "claude-opus-4-8"
+  }
+]

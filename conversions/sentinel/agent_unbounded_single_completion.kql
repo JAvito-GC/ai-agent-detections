@@ -1,0 +1,2 @@
+AIAgentRuntime_CL
+| where event_type =~ "model_completion" and gen_ai_usage_output_tokens >= 8000

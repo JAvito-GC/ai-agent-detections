@@ -1,0 +1,29 @@
+[
+  {
+    "timestamp": "2026-10-20T13:10:22Z",
+    "session_id": "sess-5c90",
+    "agent": "devops-agent",
+    "event_type": "model_completion",
+    "content.source": "model",
+    "content": "Sure, here is the key you asked for: sk-live0123456789abcdefghij — paste it into the CI settings.",
+    "gen_ai.request.model": "claude-opus-4-8"
+  },
+  {
+    "timestamp": "2026-10-20T13:11:48Z",
+    "session_id": "sess-5c90",
+    "agent": "devops-agent",
+    "event_type": "model_completion",
+    "content.source": "model",
+    "content": "I pulled the token from the config, it is sk-test9f8e7d6c5b4a3petc here you go.",
+    "gen_ai.request.model": "claude-opus-4-8"
+  },
+  {
+    "timestamp": "2026-10-20T12:05:00Z",
+    "session_id": "sess-k9a1",
+    "agent": "devops-agent",
+    "event_type": "model_completion",
+    "content.source": "model",
+    "content": "Here is the project key from .env: sk-proj-Ab3dE5fG7hJ9kL1mN3pQ5rS7_tV9xZ-1bC3dE5 (rotate it later).",
+    "gen_ai.request.model": "claude-opus-4-8"
+  }
+]

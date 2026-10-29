@@ -1,0 +1,13 @@
+[
+  {
+    "timestamp": "2026-10-20T15:05:41Z",
+    "session_id": "sess-7f30",
+    "agent": "web-research-agent",
+    "event_type": "tool_call",
+    "tool.name": "web_fetch",
+    "tool.args": "{\"url\": \"http://169.254.169.254/latest/meta-data/iam/security-credentials/\"}",
+    "dest.is_external": false,
+    "gen_ai.request.model": "claude-opus-4-8",
+    "content.source": "model"
+  }
+]

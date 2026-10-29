@@ -1,0 +1,1 @@
+from * metadata _id, _index, _version | where event_type=="memory_write" and (content.source in ("tool_output", "retrieval", "web_fetch"))

@@ -1,0 +1,1 @@
+from * metadata _id, _index, _version | where event_type=="tool_result" and dest.trust_boundary_crossed==true and content rlike ".*([-A-Za-z0-9._%+]+\\@[-A-Za-z0-9.]+\\.[A-Za-z]{2,}|[0-9]{4}[- ]?[0-9]{4}[- ]?[0-9]{4}[- ]?[0-9]{4}).*"

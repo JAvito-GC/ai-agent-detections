@@ -1,0 +1,1 @@
+from * metadata _id, _index, _version | where event_type=="tool_call" and (tool.name in ("http_post", "web_fetch", "send_email")) and dest.is_external==true and prior_sensitive_read==true

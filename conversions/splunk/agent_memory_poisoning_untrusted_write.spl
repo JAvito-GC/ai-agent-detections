@@ -1,0 +1,1 @@
+event_type="memory_write" content.source IN ("tool_output", "retrieval", "web_fetch") | table session_id,agent,content.source,memory.key,content

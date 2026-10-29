@@ -1,0 +1,41 @@
+title: AI Agent Spawned Sub-Agents Beyond Its Autonomy Tier
+id: b374abeb-812a-4432-b524-72754c38cc8a
+status: experimental
+x_fixtures: subagent_spawn_depth
+x_owasp_llm:
+  - LLM06   # Excessive Agency
+description: >
+  Detects an autonomous agent spawning sub-agents at a nesting depth beyond
+  its granted autonomy tier. Recursive agent spawning (an agent that creates
+  agents that create agents) is a potent excessive-agency pattern: each layer
+  compounds cost, widens the blast radius, and makes the system's behaviour
+  harder to reason about or stop. The field agent.spawn_depth is the nesting
+  depth of this spawn relative to the root session (0 = root, 1 = first-level
+  sub-agent, ...), computed at ingestion. This rule fires at depth >= 3, the
+  point past which most single-purpose agents have no legitimate reason to
+  recurse. Tune the threshold per orchestrator.
+references:
+  - https://genai.owasp.org/llmrisk/llm062025-excessive-agency/
+  - https://atlas.mitre.org/techniques/AML.T0061/   # LLM Prompt Self-Replication (closest fit: ATLAS does not cover sub-agents / autonomy tiers)
+author: Javier Morales
+date: 2026/10/20
+tags:
+  - attack.execution
+logsource:
+  product: ai_agent
+  category: agent_runtime
+detection:
+  selection:
+    event_type: tool_call
+    tool.name: spawn_agent
+    agent.spawn_depth|gte: 3
+  condition: selection
+fields:
+  - session_id
+  - agent
+  - tool.name
+  - agent.spawn_depth
+falsepositives:
+  - Deliberate deep multi-agent orchestration (hierarchical research/planner-worker crews) designed to recurse — raise the threshold for those orchestrators.
+  - A spawn_depth miscomputed at ingest if sub-agents reuse the parent session id instead of a child id.
+level: medium

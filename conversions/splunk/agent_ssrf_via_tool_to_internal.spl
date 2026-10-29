@@ -1,0 +1,1 @@
+event_type="tool_call" tool.name IN ("web_fetch", "http_request") tool.args IN ("*169.254.169.254*", "*localhost*", "*127.0.0.1*", "*metadata*", "*::1*") | table session_id,agent,tool.name,tool.args

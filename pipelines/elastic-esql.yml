@@ -1,0 +1,16 @@
+# Elastic ES|QL: align the generated queries with Sigma semantics.
+name: AI agent runtime -> Elastic ES|QL
+priority: 100
+postprocessing:
+  # Sigma `contains` is case-insensitive; ES|QL LIKE is not (rule patterns are lowercase)
+  - type: replace
+    pattern: '([\s(])([\w.]+) like "'
+    replacement: '\1TO_LOWER(\2) like "'
+  # A missing field yields null and NOT null drops the event; Sigma treats it as "not matched"
+  - type: replace
+    pattern: 'not ([\w.]+)==(true|false|"[^"]*")'
+    replacement: 'not COALESCE(\1==\2, false)'
+  # Sigma `re` searches anywhere; Lucene regex (RLIKE) must match the whole value
+  - type: replace
+    pattern: 'rlike "((?:[^"\\]|\\.)*)"'
+    replacement: 'rlike ".*\1.*"'

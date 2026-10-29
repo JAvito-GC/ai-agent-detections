@@ -1,0 +1,1 @@
+event_type="model_completion" gen_ai.usage.output_tokens>=8000 | table session_id,agent,gen_ai.request.model,gen_ai.usage.output_tokens

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Agent Detections</title>
+<meta name="description" content="Tested Sigma detection rules for AI agent and LLM threats: prompt injection, excessive agency, MCP tool poisoning, runaway loops. Free seed set on GitHub, Pro feed waitlist.">
+<style>
+  :root {
+    --bg: #fbfaf7; --fg: #1c1c1a; --muted: #5d5b55; --line: #e3e0d8;
+    --accent: #1f5f4a; --accent-fg: #ffffff; --card: #ffffff; --code: #f1efe9;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141513; --fg: #ecebe6; --muted: #a3a199; --line: #2c2d29;
+      --accent: #6cc4a1; --accent-fg: #0d1a14; --card: #1b1c19; --code: #23241f;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg);
+    font: 17px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 56px 16px 72px; }
+  h1 { font-size: clamp(30px, 6vw, 44px); line-height: 1.1; margin: 0 0 16px; letter-spacing: -0.02em; }
+  h2 { font-size: 22px; margin: 48px 0 12px; }
+  p { margin: 0 0 14px; }
+  .lede { font-size: 19px; color: var(--muted); }
+  .muted { color: var(--muted); }
+  a { color: var(--accent); }
+  code { background: var(--code); padding: 1px 5px; border-radius: 4px; font-size: 0.9em; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 8px; }
+  .btn { display: inline-block; padding: 11px 18px; border-radius: 8px; text-decoration: none;
+    font-weight: 600; border: 1px solid var(--accent); }
+  .btn-primary { background: var(--accent); color: var(--accent-fg); }
+  .btn-ghost { color: var(--accent); }
+  ul.checks { padding-left: 20px; margin: 0 0 14px; }
+  ul.checks li { margin-bottom: 6px; }
+  .tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .tier { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+  .tier h3 { margin: 0 0 4px; font-size: 18px; }
+  .price { font-size: 26px; font-weight: 700; margin: 6px 0 12px; }
+  .price small { font-size: 15px; font-weight: 400; color: var(--muted); }
+  .tier ul { padding-left: 18px; margin: 0; }
+  form { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+  label { display: block; font-weight: 600; margin: 0 0 6px; }
+  input[type=email], input[type=text], select { width: 100%; padding: 10px 12px; font: inherit;
+    color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; margin-bottom: 14px; }
+  .check { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; margin-bottom: 16px; }
+  .check input { margin-top: 5px; }
+  button { font: inherit; font-weight: 600; padding: 11px 18px; border-radius: 8px; cursor: pointer;
+    background: var(--accent); color: var(--accent-fg); border: 0; }
+  .hp { position: absolute; left: -5000px; }
+  footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 15px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Detection rules for AI agents that are actually tested</h1>
+  <p class="lede">Sigma rules for prompt injection, excessive agency, MCP tool poisoning, data exfiltration and runaway loops, mapped to the OWASP LLM Top 10 and MITRE ATLAS.</p>
+  <p>Every rule ships with malicious and benign fixtures and a test that fires them, passes <code>sigma check</code> with zero issues, and comes pre-converted to Splunk, Microsoft Sentinel and Elastic ES|QL. The queries were run end to end in a lab against real engines.</p>
+  <div class="cta">
+    <a class="btn btn-primary" href="https://github.com/JAvito-GC/ai-agent-detections">Get the 15 free rules</a>
+    <a class="btn btn-ghost" href="#waitlist">Join the Pro waitlist</a>
+  </div>
+  <p class="muted">MIT licensed. Public knowledge only: OWASP, MITRE ATLAS, published research and the author's own lab.</p>
+
+  <h2>Why another rule set</h2>
+  <p>Agent detection rules are easy to write and rarely maintained. Most public sets are folders of untested YAML. When the agent framework changes a field name or a provider ships a new key prefix, they go quiet and nobody notices.</p>
+  <ul class="checks">
+    <li><strong>Fixtures per rule:</strong> every malicious event must fire, every benign one must stay quiet.</li>
+    <li><strong>Engine-verified:</strong> Splunk and Sentinel KQL 15/15, Elastic 13/15, with the 2 Lucene regex limits documented.</li>
+    <li><strong>CI regenerates the conversions</strong> on every change, so the SIEM queries never drift from the rules.</li>
+  </ul>
+
+  <h2>Free and Pro</h2>
+  <div class="tiers">
+    <div class="tier">
+      <h3>Free</h3>
+      <div class="price">$0</div>
+      <ul>
+        <li>15 rules across OWASP LLM01-LLM10</li>
+        <li>Fixtures, tests and lab</li>
+        <li>Splunk, Sentinel and Elastic conversions</li>
+      </ul>
+    </div>
+    <div class="tier">
+      <h3>Pro <span class="muted">(planned)</span></h3>
+      <div class="price">$149 <small>/ month</small></div>
+      <ul>
+        <li>40+ additional rules, each with fixtures</li>
+        <li>5-10 new or updated rules every month as agent frameworks and attacks change</li>
+        <li>Field mappings for common agent runtimes</li>
+        <li>Email support for tuning and false positives</li>
+      </ul>
+    </div>
+  </div>
+  <p class="muted" style="margin-top:14px">Pro gets built only if enough security teams ask for it. Joining the waitlist is free and nothing is charged.</p>
+
+  <h2 id="waitlist">Pro waitlist</h2>
+  <form action="https://formspree.io/f/xbdqqnzv" method="POST">
+    <input type="hidden" name="_subject" value="AI Agent Detections: Pro waitlist">
+    <input type="hidden" name="source" value="detections-landing">
+    <label for="email">Work email</label>
+    <input id="email" type="email" name="email" required autocomplete="email">
+    <label for="siem">Your SIEM</label>
+    <select id="siem" name="siem">
+      <option value="">Choose one</option>
+      <option>Splunk</option>
+      <option>Microsoft Sentinel</option>
+      <option>Elastic</option>
+      <option>Other</option>
+    </select>
+    <label for="agents">What agents or LLM apps do you need to monitor?</label>
+    <input id="agents" type="text" name="agents" placeholder="e.g. internal coding agents, customer support bot, MCP servers">
+    <label class="check"><input type="checkbox" name="prepay_interest" value="yes"> I would consider paying for the first month upfront at a founding discount</label>
+    <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <button type="submit">Join the waitlist</button>
+  </form>
+
+  <footer class="muted">
+    By Javier Morales, security engineer, author of <em>Securing Autonomous AI</em>.
+    <a href="https://javiermorales.tech/">javiermorales.tech</a>
+  </footer>
+</main>
+</body>
+</html>

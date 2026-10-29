@@ -1,0 +1,2 @@
+AIAgentRuntime_CL
+| where event_type =~ "memory_write" and (content_source in~ ("tool_output", "retrieval", "web_fetch"))

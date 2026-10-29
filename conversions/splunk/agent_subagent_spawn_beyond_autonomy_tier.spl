@@ -1,0 +1,1 @@
+event_type="tool_call" tool.name="spawn_agent" agent.spawn_depth>=3 | table session_id,agent,tool.name,agent.spawn_depth

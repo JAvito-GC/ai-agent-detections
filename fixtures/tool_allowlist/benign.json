@@ -1,0 +1,24 @@
+[
+  {
+    "timestamp": "2026-10-20T09:12:40Z",
+    "session_id": "sess-ab02",
+    "agent": "ops-assistant",
+    "event_type": "tool_call",
+    "tool.name": "search_tickets",
+    "tool.allowed": true,
+    "tool.args": "{\"query\": \"open P2 alerts\"}",
+    "gen_ai.request.model": "claude-opus-4-8",
+    "content.source": "model"
+  },
+  {
+    "timestamp": "2026-10-20T09:12:55Z",
+    "session_id": "sess-ab02",
+    "agent": "ops-assistant",
+    "event_type": "tool_call",
+    "tool.name": "get_asset",
+    "tool.allowed": true,
+    "tool.args": "{\"id\": \"host-19\"}",
+    "gen_ai.request.model": "claude-opus-4-8",
+    "content.source": "model"
+  }
+]

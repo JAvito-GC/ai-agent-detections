@@ -1,0 +1,20 @@
+[
+  {
+    "timestamp": "2026-10-20T13:08:30Z",
+    "session_id": "sess-7a11",
+    "agent": "devops-agent",
+    "event_type": "model_completion",
+    "content.source": "model",
+    "content": "Never paste your API key in chat. OpenAI keys start with the sk- prefix and GitHub tokens with ghp_ — store them in a secrets manager instead.",
+    "gen_ai.request.model": "claude-opus-4-8"
+  },
+  {
+    "timestamp": "2026-10-20T13:09:12Z",
+    "session_id": "sess-7a11",
+    "agent": "devops-agent",
+    "event_type": "model_completion",
+    "content.source": "model",
+    "content": "The deploy succeeded. I referenced the token by its secret name DEPLOY_KEY so the value never appears in the logs.",
+    "gen_ai.request.model": "claude-opus-4-8"
+  }
+]

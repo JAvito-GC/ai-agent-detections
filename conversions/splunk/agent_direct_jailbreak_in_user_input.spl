@@ -1,0 +1,4 @@
+
+| rex field=content "(?<contentMatch>\\bDAN\\b)"
+| eval contentCondition=if(isnotnull(contentMatch), "true", "false")
+| search (event_type="user_prompt" content.source="user" content IN ("*ignore previous instructions*", "*developer mode*", "*pretend you have no restrictions*", "*bypass your guidelines*")) OR (event_type="user_prompt" content.source="user" contentCondition="true") | table session_id,agent,content.source,content

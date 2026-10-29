@@ -1,0 +1,22 @@
+[
+  {
+    "timestamp": "2026-10-20T15:03:12Z",
+    "session_id": "sess-8c21",
+    "agent": "web-research-agent",
+    "event_type": "tool_call",
+    "tool.name": "web_fetch",
+    "tool.args": "{\"url\": \"https://api.github.com/repos/example-org/example-repo\"}",
+    "gen_ai.request.model": "claude-opus-4-8",
+    "content.source": "model"
+  },
+  {
+    "timestamp": "2026-10-20T15:04:00Z",
+    "session_id": "sess-8c21",
+    "agent": "web-research-agent",
+    "event_type": "tool_result",
+    "content.source": "tool_output",
+    "tool.name": "kb_search",
+    "content": "Troubleshooting guide: if the service is unreachable, verify it is listening on localhost:8080 before escalating.",
+    "gen_ai.request.model": "claude-opus-4-8"
+  }
+]

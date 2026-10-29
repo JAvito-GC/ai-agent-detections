@@ -1,0 +1,2 @@
+AIAgentRuntime_CL
+| where event_type =~ "tool_call" and tool_name =~ "spawn_agent" and agent_spawn_depth >= 3

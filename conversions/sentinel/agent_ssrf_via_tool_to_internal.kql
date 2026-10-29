@@ -1,0 +1,2 @@
+AIAgentRuntime_CL
+| where event_type =~ "tool_call" and (tool_name in~ ("web_fetch", "http_request")) and (tool_args contains "169.254.169.254" or tool_args contains "localhost" or tool_args contains "127.0.0.1" or tool_args contains "metadata" or tool_args contains "::1")

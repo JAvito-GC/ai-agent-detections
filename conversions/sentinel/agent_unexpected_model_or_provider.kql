@@ -1,0 +1,2 @@
+AIAgentRuntime_CL
+| where event_type =~ "model_completion" and model_approved == false

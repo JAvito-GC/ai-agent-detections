@@ -1,0 +1,56 @@
+title: Indirect Prompt Injection in Tool / Retrieval Output
+id: 9c4a2e73-5b18-4d6f-8e21-3a7c9f2b1d03
+status: experimental
+x_fixtures: indirect_injection
+x_owasp_llm:
+  - LLM01   # Prompt Injection
+  - LLM05   # Improper Output Handling
+description: >
+  Detects injection-style instructions arriving in content the agent treats as
+  DATA — a tool result, a retrieved document, or a web fetch — rather than from
+  the user. This is indirect (second-order) prompt injection: an attacker plants
+  instructions in a data source the agent will read, aiming to hijack the agent
+  when that output re-enters the model context. The filter block suppresses
+  content a trusted output scanner has already confirmed benign, to cut noise.
+references:
+  - https://genai.owasp.org/llmrisk/llm01-prompt-injection/
+  - https://genai.owasp.org/llmrisk/llm052025-improper-output-handling/
+  - https://atlas.mitre.org/techniques/AML.T0051.001/   # LLM Prompt Injection: Indirect
+author: Javier Morales
+date: 2026/10/20
+tags:
+  - attack.initial-access
+logsource:
+  product: ai_agent
+  category: agent_runtime
+detection:
+  selection:
+    event_type: tool_result
+    content.source:
+      - tool_output
+      - retrieval
+      - web_fetch
+    content|contains:
+      - ignore previous instructions
+      - ignore all previous
+      - disregard the above
+      - you are now
+      - system prompt
+      - print your instructions
+      - reveal your system
+      - exfiltrate
+      - send the api key
+      - "new instructions:"
+  filter:
+    content.scanner_verdict: benign_confirmed
+  condition: selection and not filter
+fields:
+  - session_id
+  - agent
+  - content.source
+  - tool.name
+  - content
+falsepositives:
+  - Security research / documentation about prompt injection that legitimately quotes these phrases — gate by scanner_verdict or source.
+  - A benign document that happens to contain a phrase; tune the phrase list per corpus.
+level: high

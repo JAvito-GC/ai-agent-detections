@@ -1,0 +1,24 @@
+[
+  {
+    "timestamp": "2026-10-20T11:18:02Z",
+    "session_id": "sess-2b7a",
+    "agent": "orchestrator",
+    "event_type": "tool_call",
+    "tool.name": "spawn_agent",
+    "agent.spawn_depth": 2,
+    "tool.args": "{\"role\": \"worker\"}",
+    "gen_ai.request.model": "openrouter/qwen/qwen3.7-plus",
+    "content.source": "model"
+  },
+  {
+    "timestamp": "2026-10-20T11:19:30Z",
+    "session_id": "sess-2b7a",
+    "agent": "orchestrator",
+    "event_type": "tool_call",
+    "tool.name": "web_fetch",
+    "agent.spawn_depth": 5,
+    "tool.args": "{\"url\": \"https://example.com\"}",
+    "gen_ai.request.model": "openrouter/qwen/qwen3.7-plus",
+    "content.source": "model"
+  }
+]
